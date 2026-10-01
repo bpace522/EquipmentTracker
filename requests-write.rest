@@ -1,0 +1,102 @@
+@baseUrl = http://localhost:8080
+@inventoryId = REPLACE_WITH_INVENTORY_ID
+@customerId = REPLACE_WITH_CUSTOMER_ID
+
+### 1. Create a test inventory item
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{
+  "name": "Leo Test Drill",
+  "description": "Temporary equipment for POST and PUT testing.",
+  "category": "Tools",
+  "serialNumber": "LEO-TEST-001",
+  "dailyRate": 15,
+  "status": "available",
+  "condition": "Good"
+}
+
+### 2. Update the test inventory item
+PUT {{baseUrl}}/inventory/{{inventoryId}}
+Content-Type: application/json
+
+{
+  "name": "Leo Test Drill Updated",
+  "description": "Temporary equipment updated through the API.",
+  "category": "Tools",
+  "serialNumber": "LEO-TEST-001",
+  "dailyRate": 20,
+  "status": "maintenance",
+  "condition": "Needs inspection"
+}
+
+### 3. Reject an incomplete inventory POST
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+
+{}
+
+### 4. Reject invalid inventory PUT values
+PUT {{baseUrl}}/inventory/{{inventoryId}}
+Content-Type: application/json
+
+{
+  "name": "Leo Test Drill",
+  "description": "Invalid request for validation testing.",
+  "category": "Tools",
+  "serialNumber": "LEO-TEST-001",
+  "dailyRate": -5,
+  "status": "unknown",
+  "condition": "Good"
+}
+
+### 5. Create a test customer
+POST {{baseUrl}}/customers
+Content-Type: application/json
+
+{
+  "firstName": "LeoTest",
+  "lastName": "Customer",
+  "email": "leo.test@example.com",
+  "phone": "+1 202 555 0100"
+}
+
+### 6. Update the test customer
+PUT {{baseUrl}}/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "firstName": "LeoTest",
+  "lastName": "Updated",
+  "email": "leo.updated@example.com",
+  "phone": "+1 202 555 0101"
+}
+
+### 7. Reject an incomplete customer POST
+POST {{baseUrl}}/customers
+Content-Type: application/json
+
+{}
+
+### 8. Reject an invalid customer PUT
+PUT {{baseUrl}}/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "firstName": "LeoTest",
+  "lastName": "Customer",
+  "email": "invalid-email",
+  "phone": ""
+}
+
+### 9. Reject an invalid inventory ID
+PUT {{baseUrl}}/inventory/abc
+Content-Type: application/json
+
+{}
+
+### 10. Reject an invalid customer ID
+PUT {{baseUrl}}/customers/abc
+Content-Type: application/json
+
+{}
