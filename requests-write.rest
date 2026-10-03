@@ -2,6 +2,12 @@
 @inventoryId = REPLACE_WITH_INVENTORY_ID
 @customerId = REPLACE_WITH_CUSTOMER_ID
 
+### get inventory
+GET {{baseUrl}}/inventory
+
+### get all customers
+GET {{baseUrl}}/customers
+
 ### 1. Create a test inventory item
 POST {{baseUrl}}/inventory
 Content-Type: application/json
