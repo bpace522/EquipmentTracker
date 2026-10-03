@@ -59,7 +59,79 @@ function createController(collectionName) {
     }
   }
 
-  return { create, update };
+  async function remove(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!isValidId(id)) {
+        return res.status(400).json({
+          error: 'Invalid document ID',
+        });
+      }
+
+      const result = await model.deleteDocument(collectionName, id);
+
+      if (result.deletedCount === 0) {
+        return res.status(404).json({
+          error: 'Document not found',
+        });
+      }
+
+      return res.status(204).send();
+    } catch (error) {
+      console.error(`Failed to delete ${collectionName}:`, error.message);
+
+      return res.status(500).json({
+        error: 'Internal server error',
+      });
+    }
+  }
+
+  async function getOne(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!isValidId(id)) {
+        return res.status(400).json({
+          error: 'Invalid document ID',
+        });
+      }
+
+      const result = await model.getOneDocument(collectionName, id);
+
+      if (!result) {
+        return res.status(404).json({
+          error: 'Document not found',
+        });
+      }
+
+      return res.status(200).json(result);
+
+    } catch (error) {
+      console.error(`Failed to get from ${collectionName}:`, error.message);
+
+      return res.status(500).json({
+        error: 'Internal server error',
+      });
+    }
+  }
+
+  async function getAll(req, res) {
+    try {
+      const result = await model.getAllDocument(collectionName);
+
+      return res.status(200).json(result);
+
+    } catch (error) {
+      console.error(`Failed to get from ${collectionName}:`, error.message);
+
+      return res.status(500).json({
+        error: 'Internal server error',
+      });
+    }
+  }
+
+  return { create, update, remove, getOne, getAll };
 }
 
 const inventory = createController('inventory');
@@ -70,4 +142,10 @@ module.exports = {
   updateInventory: inventory.update,
   createCustomer: customers.create,
   updateCustomer: customers.update,
+  deleteInventory: inventory.remove,
+  getInventoryOne: inventory.getOne,
+  getInventoryAll: inventory.getAll,
+  deleteCustomer: customers.remove,
+  getCustomerOne: customers.getOne,
+  getCustomerAll: customers.getAll,
 };

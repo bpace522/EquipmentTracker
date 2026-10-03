@@ -14,4 +14,25 @@ function updateDocument(collectionName, id, data) {
     );
 }
 
-module.exports = { createDocument, updateDocument };
+function deleteDocument(collectionName, id) {
+  return getDb()
+    .collection(collectionName)
+    .deleteOne(
+      { _id: new ObjectId(id) }
+    );
+}
+
+function getOneDocument(collectionName, id) {
+  return getDb()
+    .collection(collectionName)
+    .findOne({ _id: new ObjectId(id) });
+}
+
+function getAllDocument(collectionName) {
+  return getDb()
+    .collection(collectionName)
+    .find({})
+    .toArray();
+}
+
+module.exports = { createDocument, updateDocument, deleteDocument, getOneDocument, getAllDocument };

@@ -5,25 +5,46 @@
     "description": "API for managing inventory and customer write operations.",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
   "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
   "paths": {
     "/inventory": {
-      "post": {
+      "get": {
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Inventory items returned"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Inventory"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Inventory item created"
+          },
+          "400": {
+            "description": "Invalid inventory data"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/inventory/{id}": {
-      "put": {
+      "get": {
         "description": "",
         "parameters": [
           {
@@ -34,24 +55,116 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Inventory item returned"
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
+          "404": {
+            "description": "Inventory item not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Inventory"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Inventory item updated"
+          },
+          "400": {
+            "description": "Invalid ID or inventory data"
+          },
+          "404": {
+            "description": "Inventory item not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Inventory item deleted"
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
+          "404": {
+            "description": "Inventory item not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/customers": {
-      "post": {
+      "get": {
         "description": "",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Customers returned"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Customer created"
+          },
+          "400": {
+            "description": "Invalid customer data"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
     "/customers/{id}": {
-      "put": {
+      "get": {
         "description": "",
         "parameters": [
           {
@@ -62,8 +175,74 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Customer returned"
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
+          "404": {
+            "description": "Customer not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Customer updated"
+          },
+          "400": {
+            "description": "Invalid ID or customer data"
+          },
+          "404": {
+            "description": "Customer not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Customer deleted"
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
+          "404": {
+            "description": "Customer not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -73,30 +252,46 @@
     "Inventory": {
       "type": "object",
       "properties": {
-        "item_name": {
+        "name": {
           "type": "string",
           "example": "Excavator"
+        },
+        "description": {
+          "type": "string",
+          "example": "Tracked excavator for construction work."
         },
         "category": {
           "type": "string",
           "example": "Heavy Machinery"
         },
-        "status": {
+        "serialNumber": {
           "type": "string",
-          "example": "Available"
+          "example": "EXC-001"
         },
-        "price": {
+        "dailyRate": {
           "type": "number",
           "example": 1500
+        },
+        "status": {
+          "type": "string",
+          "example": "available"
+        },
+        "condition": {
+          "type": "string",
+          "example": "Good"
         }
       }
     },
     "Customer": {
       "type": "object",
       "properties": {
-        "name": {
+        "firstName": {
           "type": "string",
-          "example": "John Doe"
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
         },
         "email": {
           "type": "string",
