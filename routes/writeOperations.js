@@ -3,19 +3,90 @@ const controller = require('../controllers/writeOperations');
 
 const router = express.Router();
 
-router.post('/inventory', controller.createInventory);
-router.put('/inventory/:id', controller.updateInventory);
+router.get(
+	'/inventory',
+	/* #swagger.responses[200] = { description: 'Inventory items returned' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.getInventoryAll,
+);
+router.get(
+	'/inventory/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.responses[200] = { description: 'Inventory item returned' } */
+	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
+	/* #swagger.responses[404] = { description: 'Inventory item not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.getInventoryOne,
+);
+router.post(
+	'/inventory',
+	/* #swagger.parameters['body'] = { in: 'body', schema: { $ref: '#/definitions/Inventory' } } */
+	/* #swagger.responses[201] = { description: 'Inventory item created' } */
+	/* #swagger.responses[400] = { description: 'Invalid inventory data' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.createInventory,
+);
+router.put(
+	'/inventory/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.parameters['body'] = { in: 'body', schema: { $ref: '#/definitions/Inventory' } } */
+	/* #swagger.responses[204] = { description: 'Inventory item updated' } */
+	/* #swagger.responses[400] = { description: 'Invalid ID or inventory data' } */
+	/* #swagger.responses[404] = { description: 'Inventory item not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.updateInventory,
+);
+router.delete(
+	'/inventory/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.responses[204] = { description: 'Inventory item deleted' } */
+	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
+	/* #swagger.responses[404] = { description: 'Inventory item not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.deleteInventory,
+);
 
-router.post('/customers', controller.createCustomer);
-router.put('/customers/:id', controller.updateCustomer);
-
-// Process to delete inventory
-router.post('/delete/:id', controller.deleteInventory)
-
-// Process to get all inventory
-router.get('/getInventory/', controller.getInventoryAll)
-
-// Process to get inventiry by Id
-router.get('/getInventory/:id', controller.getInventoryOne)
+router.get(
+	'/customers',
+	/* #swagger.responses[200] = { description: 'Customers returned' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.getCustomerAll,
+);
+router.get(
+	'/customers/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.responses[200] = { description: 'Customer returned' } */
+	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
+	/* #swagger.responses[404] = { description: 'Customer not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.getCustomerOne,
+);
+router.post(
+	'/customers',
+	/* #swagger.parameters['body'] = { in: 'body', schema: { $ref: '#/definitions/Customer' } } */
+	/* #swagger.responses[201] = { description: 'Customer created' } */
+	/* #swagger.responses[400] = { description: 'Invalid customer data' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.createCustomer,
+);
+router.put(
+	'/customers/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.parameters['body'] = { in: 'body', schema: { $ref: '#/definitions/Customer' } } */
+	/* #swagger.responses[204] = { description: 'Customer updated' } */
+	/* #swagger.responses[400] = { description: 'Invalid ID or customer data' } */
+	/* #swagger.responses[404] = { description: 'Customer not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.updateCustomer,
+);
+router.delete(
+	'/customers/:id',
+	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
+	/* #swagger.responses[204] = { description: 'Customer deleted' } */
+	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
+	/* #swagger.responses[404] = { description: 'Customer not found' } */
+	/* #swagger.responses[500] = { description: 'Internal server error' } */
+	controller.deleteCustomer,
+);
 
 module.exports = router;

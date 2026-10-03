@@ -14,9 +14,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // 2. Mount API write operations
 app.use('/', require('./routes/writeOperations'));
 
-// 3. Root route redirect or home response
+// 3. Redirect the root route to Swagger UI
 app.get('/', (req, res) => {
-  res.send('Equipment Tracker API is running. Go to <a href="/api-docs">/api-docs</a> for Swagger documentation.');
+  res.redirect('/api-docs');
 });
 
 // Error handling middleware
