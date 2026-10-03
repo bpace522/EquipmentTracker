@@ -25,34 +25,14 @@ function deleteDocument(collectionName, id) {
 function getOneDocument(collectionName, id) {
   return getDb()
     .collection(collectionName)
-    .find({ _id: new ObjectId(id) })
-      .then((data) => {
-         if (!data)
-          res
-            .status(404)
-            .send({ message: 'Not found Inventory with id ' + id });
-        else res.send(data[0]);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: 'Error retrieving Inventory with inventory_id=' + id,
-        });
-      });
+    .findOne({ _id: new ObjectId(id) });
 }
 
 function getAllDocument(collectionName) {
   return getDb()
     .collection(collectionName)
     .find({})
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || 'Some error occurred while retrieving inventory.',
-        });
-      });
+    .toArray();
 }
 
 module.exports = { createDocument, updateDocument, deleteDocument, getOneDocument, getAllDocument };

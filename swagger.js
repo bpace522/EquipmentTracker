@@ -34,18 +34,21 @@ const doc = {
     title: 'Equipment Tracker API',
     description: 'API for managing inventory and customer write operations.',
   },
-  // Leave host empty or set via environment variable so it dynamically works on Render
-  host: process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost:8080',
-  schemes: process.env.RENDER_EXTERNAL_HOSTNAME ? ['https'] : ['http'],
+  host: null,
+  schemes: null,
   definitions: {
     Inventory: {
-      item_name: 'Excavator',
+      name: 'Excavator',
+      description: 'Tracked excavator for construction work.',
       category: 'Heavy Machinery',
-      status: 'Available',
-      price: 1500
+      serialNumber: 'EXC-001',
+      dailyRate: 1500,
+      status: 'available',
+      condition: 'Good'
     },
     Customer: {
-      name: 'John Doe',
+      firstName: 'John',
+      lastName: 'Doe',
       email: 'john@example.com',
       phone: '555-123-4567'
     }

@@ -59,7 +59,7 @@ function createController(collectionName) {
     }
   }
 
-  async function deleteInv(req, res) {
+  async function remove(req, res) {
     try {
       const { id } = req.params;
 
@@ -69,16 +69,9 @@ function createController(collectionName) {
         });
       }
 
-      // const validation = validateBody(collectionName, req.body);
-      // const errors = validation?.errors || [];
-
-      // if (errors.length > 0) {
-      //   return res.status(400).json({ errors });
-      // }
-
       const result = await model.deleteDocument(collectionName, id);
 
-      if (result.deleteCount === 0) {
+      if (result.deletedCount === 0) {
         return res.status(404).json({
           error: 'Document not found',
         });
@@ -92,10 +85,9 @@ function createController(collectionName) {
         error: 'Internal server error',
       });
     }
-    
   }
 
-  async function getInvOne(req, res) {
+  async function getOne(req, res) {
     try {
       const { id } = req.params;
 
@@ -105,7 +97,15 @@ function createController(collectionName) {
         });
       }
 
-      const result = await model.getOneDocument(collectionName, id)
+      const result = await model.getOneDocument(collectionName, id);
+
+      if (!result) {
+        return res.status(404).json({
+          error: 'Document not found',
+        });
+      }
+
+      return res.status(200).json(result);
 
     } catch (error) {
       console.error(`Failed to get from ${collectionName}:`, error.message);
@@ -116,10 +116,11 @@ function createController(collectionName) {
     }
   }
 
-    async function getInvAll(req, res) {
+  async function getAll(req, res) {
     try {
+      const result = await model.getAllDocument(collectionName);
 
-      const result = await model.getAllDocument(collectionName)
+      return res.status(200).json(result);
 
     } catch (error) {
       console.error(`Failed to get from ${collectionName}:`, error.message);
@@ -130,7 +131,7 @@ function createController(collectionName) {
     }
   }
 
-  return { create, update, deleteInv, getInvOne, getInvAll };
+  return { create, update, remove, getOne, getAll };
 }
 
 const inventory = createController('inventory');
@@ -141,7 +142,10 @@ module.exports = {
   updateInventory: inventory.update,
   createCustomer: customers.create,
   updateCustomer: customers.update,
-  deleteInventory: inventory.deleteInv,
-  getInventoryOne: inventory.getInvOne,
-  getInventoryAll: inventory.getInvAll
+  deleteInventory: inventory.remove,
+  getInventoryOne: inventory.getOne,
+  getInventoryAll: inventory.getAll,
+  deleteCustomer: customers.remove,
+  getCustomerOne: customers.getOne,
+  getCustomerAll: customers.getAll,
 };
