@@ -275,7 +275,11 @@
           "Maintenance"
         ],
         "summary": "List all maintenance orders",
+<<<<<<< HEAD
         "description": "",
+=======
+        "description": "Returns every maintenance order in the collection.",
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
         "responses": {
           "200": {
             "description": "Maintenance orders returned"
@@ -335,7 +339,11 @@
           "Maintenance"
         ],
         "summary": "Get a maintenance order by ID",
+<<<<<<< HEAD
         "description": "",
+=======
+        "description": "Returns the maintenance order matching the supplied MongoDB ObjectId.",
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
         "parameters": [
           {
             "name": "id",
@@ -424,7 +432,11 @@
           "Reservations"
         ],
         "summary": "List all reservations",
+<<<<<<< HEAD
         "description": "",
+=======
+        "description": "Returns every reservation in the collection.",
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
         "responses": {
           "200": {
             "description": "Reservations returned"
@@ -484,7 +496,11 @@
           "Reservations"
         ],
         "summary": "Get a reservation by ID",
+<<<<<<< HEAD
         "description": "",
+=======
+        "description": "Returns the reservation matching the supplied MongoDB ObjectId.",
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
         "parameters": [
           {
             "name": "id",

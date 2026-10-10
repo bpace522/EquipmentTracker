@@ -31,6 +31,48 @@ async function validateReferences(collectionName, data) {
 }
 
 function createWriteController(collectionName, resourcePath) {
+  async function getAll(req, res) {
+    try {
+      const result = await model.getAllDocument(collectionName);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error(`Failed to get from ${collectionName}:`, error.message);
+
+      return res.status(500).json({
+        error: 'Internal server error',
+      });
+    }
+  }
+
+  async function getById(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!isValidId(id)) {
+        return res.status(400).json({
+          error: 'Invalid document ID',
+        });
+      }
+
+      const result = await model.getOneDocument(collectionName, id);
+
+      if (!result) {
+        return res.status(404).json({
+          error: 'Document not found',
+        });
+      }
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error(`Failed to get from ${collectionName}:`, error.message);
+
+      return res.status(500).json({
+        error: 'Internal server error',
+      });
+    }
+  }
+
   async function create(req, res) {
     try {
       const { errors, data } = validateBody(collectionName, req.body);
@@ -108,6 +150,7 @@ function createWriteController(collectionName, resourcePath) {
     }
   }
 
+<<<<<<< HEAD
   async function remove(req, res) {
     try {
       const { id } = req.params;
@@ -137,6 +180,9 @@ function createWriteController(collectionName, resourcePath) {
   }
 
   return { create, update, remove };
+=======
+  return { create, update, getAll, getById };
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
 }
 
 const maintenance = createWriteController(
@@ -152,8 +198,17 @@ const reservations = createWriteController(
 module.exports = {
   createMaintenance: maintenance.create,
   updateMaintenance: maintenance.update,
+<<<<<<< HEAD
   deleteMaintenance: maintenance.remove,
   createReservation: reservations.create,
   updateReservation: reservations.update,
   deleteReservation: reservations.remove
+=======
+  getMaintenanceAll: maintenance.getAll,
+  getMaintenanceById: maintenance.getById,
+  createReservation: reservations.create,
+  updateReservation: reservations.update,
+  getReservationAll: reservations.getAll,
+  getReservationById: reservations.getById,
+>>>>>>> 487c57d (feat: add missing GET routes and expand unit tests to 8 tests)
 };
