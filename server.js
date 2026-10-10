@@ -46,6 +46,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // 2. Mount API write operations
 app.use('/', require('./routes/writeOperations'));
 app.use('/', require('./routes/maintenanceReservationsWrite'));
+app.use('/', require('./routes/index'));
 
 // 3. Redirect the root route to Swagger UI
 app.get('/', (req, res) => {
