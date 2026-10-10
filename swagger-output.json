@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Equipment Tracker API",
-    "description": "API for managing inventory and customer write operations.",
+    "description": "API for managing inventory, customers, maintenance orders, and reservations.",
     "version": "1.0.0"
   },
   "basePath": "/",
@@ -250,6 +250,170 @@
           }
         }
       }
+    },
+    "/maintenance/order": {
+      "post": {
+        "tags": [
+          "Maintenance"
+        ],
+        "summary": "Create a maintenance order",
+        "description": "All fields are required. inventoryId must identify an existing inventory item. scheduledDate uses YYYY-MM-DD. status: scheduled, in-progress, completed, or cancelled. cost must be zero or greater.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Maintenance"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created. The response contains the new document id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "507f1f77bcf86cd799439011"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid fields or inventory reference"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/maintenance/order/{id}": {
+      "put": {
+        "tags": [
+          "Maintenance"
+        ],
+        "summary": "Update a maintenance order",
+        "description": "Send all fields. inventoryId must identify an existing inventory item. scheduledDate uses YYYY-MM-DD. status: scheduled, in-progress, completed, or cancelled. cost must be zero or greater.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The 24-character MongoDB ID of the maintenance order"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Maintenance"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated successfully. No response body."
+          },
+          "400": {
+            "description": "Invalid ID, fields, or inventory reference"
+          },
+          "404": {
+            "description": "Maintenance order not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/reservations": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Create a reservation",
+        "description": "All fields are required. inventoryId and customerId must identify existing documents. Dates use YYYY-MM-DD. endDate must be on or after startDate. status: pending, confirmed, completed, or cancelled.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created. The response contains the new document id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "507f1f77bcf86cd799439011"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid fields, dates, or document references"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/reservations/{id}": {
+      "put": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Update a reservation",
+        "description": "Send all fields. inventoryId and customerId must identify existing documents. Dates use YYYY-MM-DD. endDate must be on or after startDate. status: pending, confirmed, completed, or cancelled.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The 24-character MongoDB ID of the reservation"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated successfully. No response body."
+          },
+          "400": {
+            "description": "Invalid ID, fields, dates, or document references"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -304,6 +468,56 @@
         "phone": {
           "type": "string",
           "example": "555-123-4567"
+        }
+      }
+    },
+    "Maintenance": {
+      "type": "object",
+      "properties": {
+        "inventoryId": {
+          "type": "string",
+          "example": "507f1f77bcf86cd799439011"
+        },
+        "description": {
+          "type": "string",
+          "example": "Leo Swagger maintenance test"
+        },
+        "scheduledDate": {
+          "type": "string",
+          "example": "2026-10-15"
+        },
+        "status": {
+          "type": "string",
+          "example": "scheduled"
+        },
+        "cost": {
+          "type": "number",
+          "example": 30
+        }
+      }
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "inventoryId": {
+          "type": "string",
+          "example": "507f1f77bcf86cd799439011"
+        },
+        "customerId": {
+          "type": "string",
+          "example": "507f1f77bcf86cd799439012"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2026-10-15"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2026-10-16"
+        },
+        "status": {
+          "type": "string",
+          "example": "pending"
         }
       }
     }

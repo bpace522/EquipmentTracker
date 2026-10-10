@@ -1,0 +1,77 @@
+@baseUrl = http://localhost:8080
+@inventoryId = 6abdd370390bfbe1d9a47b78
+@customerId = 6abdd3b5390bfbe1d9a47b79
+@maintenanceId = 6ac876d3a0075c7aedcb7786
+@reservationId = 6ac87701a0075c7aedcb7787
+
+### 1. Create maintenance
+POST {{baseUrl}}/maintenance/order
+Content-Type: application/json
+
+{
+  "inventoryId": "{{inventoryId}}",
+  "description": "Leo W06 test maintenance",
+  "scheduledDate": "2026-10-15",
+  "status": "scheduled",
+  "cost": 30
+}
+
+### 2. Update maintenance
+PUT {{baseUrl}}/maintenance/order/{{maintenanceId}}
+Content-Type: application/json
+
+{
+  "inventoryId": "{{inventoryId}}",
+  "description": "Leo W06 test maintenance updated",
+  "scheduledDate": "2026-10-15",
+  "status": "completed",
+  "cost": 45
+}
+
+### 3. Create reservation
+POST {{baseUrl}}/reservations
+Content-Type: application/json
+
+{
+  "inventoryId": "{{inventoryId}}",
+  "customerId": "{{customerId}}",
+  "startDate": "2026-10-15",
+  "endDate": "2026-10-16",
+  "status": "pending"
+}
+
+### 4. Update reservation
+PUT {{baseUrl}}/reservations/{{reservationId}}
+Content-Type: application/json
+
+{
+  "inventoryId": "{{inventoryId}}",
+  "customerId": "{{customerId}}",
+  "startDate": "2026-10-15",
+  "endDate": "2026-10-17",
+  "status": "confirmed"
+}
+
+### 5. Invalid maintenance POST
+POST {{baseUrl}}/maintenance/order
+Content-Type: application/json
+
+{}
+
+### 6. Invalid maintenance PUT
+PUT {{baseUrl}}/maintenance/order/{{maintenanceId}}
+Content-Type: application/json
+
+{}
+
+### 7. Invalid reservation POST
+POST {{baseUrl}}/reservations
+Content-Type: application/json
+
+{}
+
+### 8. Invalid reservation PUT
+PUT {{baseUrl}}/reservations/{{reservationId}}
+Content-Type: application/json
+
+{}
