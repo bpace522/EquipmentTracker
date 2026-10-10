@@ -5,18 +5,22 @@ const router = express.Router();
 
 router.get(
 	'/inventory',
+	/* #swagger.summary = 'List all inventory items' */
+	/* #swagger.description = 'Returns every inventory item in the collection.' */
 	/* #swagger.responses[200] = { description: 'Inventory items returned' } */
 	/* #swagger.responses[500] = { description: 'Internal server error' } */
 	controller.getInventoryAll,
 );
 router.get(
 	'/inventory/:id',
+	/* #swagger.summary = 'Get an inventory item by ID' */
+	/* #swagger.description = 'Returns the inventory item matching the supplied MongoDB ObjectId.' */
 	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
 	/* #swagger.responses[200] = { description: 'Inventory item returned' } */
 	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
 	/* #swagger.responses[404] = { description: 'Inventory item not found' } */
 	/* #swagger.responses[500] = { description: 'Internal server error' } */
-	controller.getInventoryOne,
+	controller.getInventoryById,
 );
 router.post(
 	'/inventory',
@@ -48,18 +52,22 @@ router.delete(
 
 router.get(
 	'/customers',
+	/* #swagger.summary = 'List all customers' */
+	/* #swagger.description = 'Returns every customer in the collection.' */
 	/* #swagger.responses[200] = { description: 'Customers returned' } */
 	/* #swagger.responses[500] = { description: 'Internal server error' } */
 	controller.getCustomerAll,
 );
 router.get(
 	'/customers/:id',
+	/* #swagger.summary = 'Get a customer by ID' */
+	/* #swagger.description = 'Returns the customer matching the supplied MongoDB ObjectId.' */
 	/* #swagger.parameters['id'] = { in: 'path', required: true, type: 'string' } */
 	/* #swagger.responses[200] = { description: 'Customer returned' } */
 	/* #swagger.responses[400] = { description: 'Invalid document ID' } */
 	/* #swagger.responses[404] = { description: 'Customer not found' } */
 	/* #swagger.responses[500] = { description: 'Internal server error' } */
-	controller.getCustomerOne,
+	controller.getCustomerById,
 );
 router.post(
 	'/customers',

@@ -87,7 +87,7 @@ function createController(collectionName) {
     }
   }
 
-  async function getOne(req, res) {
+  async function getById(req, res) {
     try {
       const { id } = req.params;
 
@@ -131,7 +131,7 @@ function createController(collectionName) {
     }
   }
 
-  return { create, update, remove, getOne, getAll };
+  return { create, update, remove, getById, getAll };
 }
 
 const inventory = createController('inventory');
@@ -143,9 +143,11 @@ module.exports = {
   createCustomer: customers.create,
   updateCustomer: customers.update,
   deleteInventory: inventory.remove,
-  getInventoryOne: inventory.getOne,
+  getInventoryOne: inventory.getById,
+  getInventoryById: inventory.getById,
   getInventoryAll: inventory.getAll,
   deleteCustomer: customers.remove,
-  getCustomerOne: customers.getOne,
+  getCustomerOne: customers.getById,
+  getCustomerById: customers.getById,
   getCustomerAll: customers.getAll,
 };

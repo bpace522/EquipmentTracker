@@ -9,7 +9,8 @@
   "paths": {
     "/inventory": {
       "get": {
-        "description": "",
+        "summary": "List all inventory items",
+        "description": "Returns every inventory item in the collection.",
         "responses": {
           "200": {
             "description": "Inventory items returned"
@@ -45,7 +46,8 @@
     },
     "/inventory/{id}": {
       "get": {
-        "description": "",
+        "summary": "Get an inventory item by ID",
+        "description": "Returns the inventory item matching the supplied MongoDB ObjectId.",
         "parameters": [
           {
             "name": "id",
@@ -129,7 +131,8 @@
     },
     "/customers": {
       "get": {
-        "description": "",
+        "summary": "List all customers",
+        "description": "Returns every customer in the collection.",
         "responses": {
           "200": {
             "description": "Customers returned"
@@ -165,7 +168,8 @@
     },
     "/customers/{id}": {
       "get": {
-        "description": "",
+        "summary": "Get a customer by ID",
+        "description": "Returns the customer matching the supplied MongoDB ObjectId.",
         "parameters": [
           {
             "name": "id",
