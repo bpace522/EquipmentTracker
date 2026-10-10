@@ -33,7 +33,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.CALLBACK_URL || "http://localhost:8080"
+    callbackURL: process.env.CALLBACK_URL || "https://equipmenttracker-x7rl.onrender.com"
     },
     (accessToke, refreshToken, profile, done) => {
         return done(null, profile);
