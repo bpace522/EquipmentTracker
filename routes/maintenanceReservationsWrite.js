@@ -119,4 +119,10 @@ router.put(
   controller.updateReservation
 );
 
+// Delete reserservations
+router.delete('/reservations/:id', controller.deleteReservation)
+
+// Delete maintenance
+router.delete('/maintenance/order/:id', controller.deleteMaintenance)
+
 module.exports = router;
