@@ -4,7 +4,7 @@
   "description": "This is a repo for CSE341. \r The group will focus on creating the backend API for an equipment management service",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js",
     "dev": "node --watch server.js",
     "swagger": "node swagger.js && node server.js",
@@ -33,6 +33,9 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.1",
     "swagger-autogen": "^2.23.7"
   }
 }
