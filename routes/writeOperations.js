@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('../controllers/writeOperations');
-
 const router = express.Router();
+const { isAuthenticated } = require('../middleware/authenticate');
 
 router.get(
 	'/inventory',
