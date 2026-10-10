@@ -1,10 +1,11 @@
 const express = require('express');
 const controller = require('../controllers/maintenanceReservationsWrite');
-
 const router = express.Router();
+const { isAuthenticated } = require('../middleware/authenticate');
 
 router.post(
   '/maintenance/order',
+  isAuthenticated,
   /*
     #swagger.tags = ['Maintenance']
     #swagger.summary = 'Create a maintenance order'
@@ -30,6 +31,7 @@ router.post(
 
 router.put(
   '/maintenance/order/:id',
+  isAuthenticated,
   /*
     #swagger.tags = ['Maintenance']
     #swagger.summary = 'Update a maintenance order'
@@ -63,6 +65,7 @@ router.put(
 
 router.post(
   '/reservations',
+  isAuthenticated,
   /*
     #swagger.tags = ['Reservations']
     #swagger.summary = 'Create a reservation'
@@ -88,6 +91,7 @@ router.post(
 
 router.put(
   '/reservations/:id',
+  isAuthenticated,
   /*
     #swagger.tags = ['Reservations']
     #swagger.summary = 'Update a reservation'
@@ -120,9 +124,9 @@ router.put(
 );
 
 // Delete reserservations
-router.delete('/reservations/:id', controller.deleteReservation)
+router.delete('/reservations/:id', isAuthenticated, controller.deleteReservation)
 
 // Delete maintenance
-router.delete('/maintenance/order/:id', controller.deleteMaintenance)
+router.delete('/maintenance/order/:id', isAuthenticated, controller.deleteMaintenance)
 
 module.exports = router;
