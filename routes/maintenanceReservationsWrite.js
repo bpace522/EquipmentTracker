@@ -1,7 +1,68 @@
 const express = require('express');
 const controller = require('../controllers/maintenanceReservationsWrite');
+const readController = require('../controllers/maintenanceReservationsRead');
 const router = express.Router();
 const { isAuthenticated } = require('../middleware/authenticate');
+
+router.get(
+  '/maintenance/order',
+  /*
+    #swagger.tags = ['Maintenance']
+    #swagger.summary = 'List all maintenance orders'
+    #swagger.responses[200] = { description: 'Maintenance orders returned' }
+    #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  readController.getMaintenanceAll
+);
+
+router.get(
+  '/maintenance/order/:id',
+  /*
+    #swagger.tags = ['Maintenance']
+    #swagger.summary = 'Get a maintenance order by ID'
+    #swagger.parameters['id'] = {
+      in: 'path',
+      required: true,
+      type: 'string',
+      description: 'The 24-character MongoDB ID of the maintenance order'
+    }
+    #swagger.responses[200] = { description: 'Maintenance order returned' }
+    #swagger.responses[400] = { description: 'Invalid document ID' }
+    #swagger.responses[404] = { description: 'Maintenance order not found' }
+    #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  readController.getMaintenanceById
+);
+
+router.get(
+  '/reservations',
+  /*
+    #swagger.tags = ['Reservations']
+    #swagger.summary = 'List all reservations'
+    #swagger.responses[200] = { description: 'Reservations returned' }
+    #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  readController.getReservationsAll
+);
+
+router.get(
+  '/reservations/:id',
+  /*
+    #swagger.tags = ['Reservations']
+    #swagger.summary = 'Get a reservation by ID'
+    #swagger.parameters['id'] = {
+      in: 'path',
+      required: true,
+      type: 'string',
+      description: 'The 24-character MongoDB ID of the reservation'
+    }
+    #swagger.responses[200] = { description: 'Reservation returned' }
+    #swagger.responses[400] = { description: 'Invalid document ID' }
+    #swagger.responses[404] = { description: 'Reservation not found' }
+    #swagger.responses[500] = { description: 'Internal server error' }
+  */
+  readController.getReservationById
+);
 
 router.post(
   '/maintenance/order',
