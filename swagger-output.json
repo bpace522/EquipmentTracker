@@ -2,13 +2,24 @@
   "swagger": "2.0",
   "info": {
     "title": "Equipment Tracker API",
-    "description": "API for managing inventory, customers, maintenance orders, and reservations.",
+    "description": "API for managing inventory, customers, maintenance orders, and reservations. To use protected routes (POST, PUT, DELETE), sign in with GitHub by opening /auth/github in a browser tab, then return to /api-docs.",
     "version": "1.0.0"
   },
   "basePath": "/",
+  "securityDefinitions": {
+    "githubAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Cookie",
+      "description": "To use protected routes (POST, PUT, DELETE), sign in with GitHub by opening /auth/github in a browser tab, then return to /api-docs."
+    }
+  },
   "paths": {
     "/inventory": {
       "get": {
+        "tags": [
+          "Inventory"
+        ],
         "summary": "List all inventory items",
         "description": "Returns every inventory item in the collection.",
         "responses": {
@@ -21,7 +32,11 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Inventory"
+        ],
+        "summary": "Create an inventory item",
+        "description": "Creates a new inventory item.",
         "parameters": [
           {
             "name": "body",
@@ -44,11 +59,19 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/inventory/{id}": {
       "get": {
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Get an inventory item by ID",
         "description": "Returns the inventory item matching the supplied MongoDB ObjectId.",
         "parameters": [
@@ -75,6 +98,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Inventory"
+        ],
         "description": "",
         "parameters": [
           {
@@ -107,9 +133,17 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Inventory"
+        ],
         "description": "",
         "parameters": [
           {
@@ -135,11 +169,19 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/customers": {
       "get": {
+        "tags": [
+          "Customers"
+        ],
         "summary": "List all customers",
         "description": "Returns every customer in the collection.",
         "responses": {
@@ -152,7 +194,11 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Create a customer",
+        "description": "Creates a new customer.",
         "parameters": [
           {
             "name": "body",
@@ -175,11 +221,19 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/customers/{id}": {
       "get": {
+        "tags": [
+          "Customers"
+        ],
         "summary": "Get a customer by ID",
         "description": "Returns the customer matching the supplied MongoDB ObjectId.",
         "parameters": [
@@ -206,6 +260,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Customers"
+        ],
         "description": "",
         "parameters": [
           {
@@ -238,9 +295,17 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Customers"
+        ],
         "description": "",
         "parameters": [
           {
@@ -266,7 +331,12 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/maintenance/order": {
@@ -326,7 +396,12 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/maintenance/order/{id}": {
@@ -399,23 +474,50 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Maintenance"
+        ],
+        "summary": "Delete a maintenance order",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The 24-character MongoDB ID of the maintenance order"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Deleted successfully. No response body."
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "Maintenance order not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/reservations": {
@@ -475,7 +577,12 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     },
     "/reservations/{id}": {
@@ -548,23 +655,50 @@
           "500": {
             "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       },
       "delete": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Delete a reservation",
         "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The 24-character MongoDB ID of the reservation"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Deleted successfully. No response body."
+          },
+          "400": {
+            "description": "Invalid document ID"
+          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
-        }
+        },
+        "security": [
+          {
+            "githubAuth": []
+          }
+        ]
       }
     }
   },
